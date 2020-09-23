@@ -6,7 +6,8 @@ import java.io.Serializable;
  * Bean class for use in JSP action tags.
  * 
  * @author Remy Ward
- *
+ * @version 1.0
+ * @since 2020-09-23
  */
 public class User implements Serializable {
 
