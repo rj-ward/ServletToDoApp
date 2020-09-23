@@ -60,7 +60,7 @@ public class UserController extends HttpServlet{
         	e.printStackTrace();
         }
         
-        getServletContext().getRequestDispatcher("register/register.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher("/register/register.jsp").forward(request, response);
 	}
 	
 }
