@@ -7,6 +7,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * The class defines a database entity for storing to-do list entries.
+ * 
+ * @author Remy Ward
+ * @version 1.0
+ * @since 2020-09-23
+ */
 @Entity
 @Table(name = "todos")
 public class Todo {

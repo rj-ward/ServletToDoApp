@@ -13,6 +13,13 @@ import javax.servlet.http.HttpSession;
 import dao.TodoDao;
 import model.Todo;
 
+/**
+ * This servlet handles to-do list actions for the application.
+ * 
+ * @author Remy Ward
+ * @version 1.0
+ * @since 2020-09-23
+ */
 @WebServlet("/")
 public class TodoController extends HttpServlet {
 
@@ -29,6 +36,7 @@ public class TodoController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		// Retrieves path based on form action
 		String action = request.getServletPath();
 
 		switch (action) {
@@ -57,6 +65,12 @@ public class TodoController extends HttpServlet {
 		}
 	}
 
+	/**
+	 * Deletes item by ID selected via page link
+	 * 
+	 * @param request
+	 * @param response
+	 */
 	private void deleteTodo(HttpServletRequest request, HttpServletResponse response) {
 		int id = Integer.parseInt(request.getParameter("id"));
 		Todo toDelete = todoDao.searchForItemById(id);
@@ -64,12 +78,17 @@ public class TodoController extends HttpServlet {
 		try {
 			response.sendRedirect("list");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
 
+	/**
+	 * Merges database edits to edit entry.
+	 * 
+	 * @param request
+	 * @param response
+	 */
 	private void updateTodo(HttpServletRequest request, HttpServletResponse response) {
 		int id = Integer.parseInt(request.getParameter("id"));
 
@@ -84,12 +103,18 @@ public class TodoController extends HttpServlet {
 		try {
 			response.sendRedirect("list");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
 
+	/**
+	 * Selects item to edit via ID from link and redirects to edit form, with fields
+	 * filled in.
+	 * 
+	 * @param request
+	 * @param response
+	 */
 	private void showEditForm(HttpServletRequest request, HttpServletResponse response) {
 		int id = Integer.parseInt(request.getParameter("id"));
 		Todo existingTodo = todoDao.selectTodo(id);
@@ -98,12 +123,17 @@ public class TodoController extends HttpServlet {
 		try {
 			dispatcher.forward(request, response);
 		} catch (ServletException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
 
+	/**
+	 * Adds new entry via fields provided by form.
+	 * 
+	 * @param request
+	 * @param response
+	 */
 	private void insertTodo(HttpServletRequest request, HttpServletResponse response) {
 		String title = request.getParameter("title");
 		String username = request.getParameter("username");
@@ -114,23 +144,33 @@ public class TodoController extends HttpServlet {
 		try {
 			response.sendRedirect("list");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
 
+	/**
+	 * Loads empty form to add new item to database
+	 * 
+	 * @param request
+	 * @param response
+	 */
 	private void showNewForm(HttpServletRequest request, HttpServletResponse response) {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("todo/todo-form.jsp");
 		try {
 			dispatcher.forward(request, response);
 		} catch (ServletException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
 
+	/**
+	 * Loads existing to-do entries for given user for display.
+	 * 
+	 * @param request
+	 * @param response
+	 */
 	private void listTodo(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		String username = session.getAttribute("loggedInUser_userName").toString();

@@ -18,6 +18,8 @@
 	
     <a href="<%=request.getContextPath()%>/new"
      class="btn btn-success">Add Todo</a>
+     <a href="<%=request.getContextPath()%>/list"
+     class="btn btn-success">Refresh List</a>
    </div>
    <br>
    
@@ -26,6 +28,7 @@
      <tr>
       <th>Title</th>
       <th>Todo Status</th>
+      <th>Description</th>
       <th>Actions</th>
      </tr>
     </thead>
@@ -37,6 +40,7 @@
       <tr>
        <td><c:out value="${todo.title}" /></td>
        <td><c:out value="${todo.status}" /></td>
+        <td><c:out value="${todo.description}" /></td>
 
        <td><a href="edit?id=<c:out value='${todo.id}' />">Edit</a>
         &nbsp;&nbsp;&nbsp;&nbsp; <a
@@ -50,7 +54,7 @@
     </tbody>
 
    </table>
-   ${loggedInUser_userName}
+
   </div>
  </div>
 

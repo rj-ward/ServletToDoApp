@@ -32,6 +32,7 @@ public class UserDao {
 	public void insertUser(User s) {
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
+		// Checks for duplicate usernames before creating entry.
 		User test = searchForUserByUsername(s.getUsername());
 		if (test == null) {
 			em.persist(s);
@@ -39,14 +40,25 @@ public class UserDao {
 		em.close();
 	}
 
-	public User searchForUserById(int idToEdit) {
+	/**
+	 * Finds entry based on ID
+	 * 
+	 * @param id ID primary key number for entry
+	 * @return Todo object of entry
+	 */
+	public User searchForUserById(int id) {
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
-		User found = em.find(User.class, idToEdit);
+		User found = em.find(User.class, id);
 		em.close();
 		return found;
 	}
 
+	/**
+	 * Removes item from database
+	 * 
+	 * @param toDelete
+	 */
 	public void deleteItem(User toDelete) {
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
@@ -61,7 +73,14 @@ public class UserDao {
 		em.close();
 	}
 
-	public boolean checkForSingleResult(TypedQuery<User> query) {
+	/**
+	 * Helper method to check if a query has only one result. Used to avoid errors
+	 * with getSingleResult().
+	 * 
+	 * @param query TypedQuery result from database search
+	 * @return true if only one entry exists
+	 */
+	private boolean checkForSingleResult(TypedQuery<User> query) {
 		List<User> results = query.getResultList();
 		if (results.isEmpty()) {
 			return false;
@@ -72,6 +91,13 @@ public class UserDao {
 		}
 	}
 
+	/**
+	 * Searches for a given user by username.
+	 * 
+	 * @param username User to be located
+	 * @return User object if found, null otherwise
+	 * @throws NullPointerException Returns null if no user by that name exists.
+	 */
 	public User searchForUserByUsername(String username) throws NullPointerException {
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
