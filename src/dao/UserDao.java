@@ -38,7 +38,7 @@ public class UserDao {
 		}
 		em.close();
 	}
-	
+
 	public User searchForUserById(int idToEdit) {
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
@@ -46,13 +46,12 @@ public class UserDao {
 		em.close();
 		return found;
 	}
-	
+
 	public void deleteItem(User toDelete) {
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
 		// Searches for item based on ID passed from form.
-		TypedQuery<User> typedQuery = em.createQuery("select li from User li where li.id = :selectedId",
-				User.class);
+		TypedQuery<User> typedQuery = em.createQuery("select li from User li where li.id = :selectedId", User.class);
 		typedQuery.setParameter("selectedId", toDelete.getId());
 		User result = typedQuery.getSingleResult();
 		// Removes entry
@@ -61,7 +60,7 @@ public class UserDao {
 		em.getTransaction().commit();
 		em.close();
 	}
-	
+
 	public boolean checkForSingleResult(TypedQuery<User> query) {
 		List<User> results = query.getResultList();
 		if (results.isEmpty()) {
@@ -72,8 +71,8 @@ public class UserDao {
 			return true;
 		}
 	}
-	
-	public User searchForUserByUsername(String username) throws NullPointerException{
+
+	public User searchForUserByUsername(String username) throws NullPointerException {
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
 		// Searches for item based on ID passed from form.
@@ -83,9 +82,9 @@ public class UserDao {
 		User result = null;
 		if (checkForSingleResult(typedQuery)) {
 			result = typedQuery.getSingleResult();
-		} 
+		}
 		em.close();
 		return result;
 	}
-	
+
 }

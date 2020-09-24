@@ -7,7 +7,6 @@
 		<title>User Registration</title>
 	</head>
 <body>
-<jsp:include page="../common/header.jsp"></jsp:include>
         <div class="container">
 
             <h2>User Register Form</h2>
